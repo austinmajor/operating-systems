@@ -1,0 +1,49 @@
+• Diff between process and program?
+	• A program is a group of instructions to carry out a specified task, whereas the process is a program in execution
+	• A program is considered to be a passive entity, whereas the process is an active entity
+	• A program in execution is a process, whereas the process is a unit of work in a system 
+	• A program is assembled or compiled, it must be loaded into memory to be executed
+	• A process is not just the programs code (referred as text), it includes the current activity, as represented by the value of the program counter and the contents of the processor’s registers. A process generally also
+	includes the process stack, which contains temporary data (such as function parameters, return addresses, and local variables), and a data section, which contains global variables. A process may also include a heap, which is memory that is dynamically allocated during process run time
+• Explain the figure: Process in memory, including the functionality of each zone.
+	• Again, a program becomes a process when an executable file is loaded into memory
+	• Stack : Temporary Data (function parameters, return addresses, local variables)
+	• Heap : Dynamic Memory during runtime
+	• Data : Global Variables
+	• Text : Program Code (instructions, text)
+• Who generated the Process Control Block (PCB)? What is the purpose of PCB ? How the PCB is different to the process?
+	• The operating system will generate a PCB for each process
+	• Each PCB has unique fields for each process which supports context switching and serves as the repository for any info that may vary from process to process
+		○ Process state - new, ready, running, waiting, halted, etc 
+		○ Program counter - location of next instruction
+		○ CPU registers - contents of all process registers
+		○ CPU scheduling information - priorities, queue pointers
+		○ Memory management information - allocation
+		○ Accounting information - log of CPU, clock time, time limits
+		○ I/O status information - I/O devices, list of open files
+	• PCB manages the process, whereas each process has a unique PCB
+• Explain Context Switching and why we need it.
+	• Mechanism to multitask, saves state and moves around to proper registers
+	• OS uses interrupts to switch between tasks. During an operation the context of a process is captured so it may be restored. Switching the CPU to another process is context switching. 
+	• Context of a process is represented in the PCB
+	• When context switching occurs, the kernel saves the context in its PCB and loads the saved context of the new process scheduled to run
+	• During context switch the system does nothing, also known as "overhead"    
+• Explain fork() and exec() system functions.
+	• fork() creates a new process. The return value is 1 of 3:
+		○ Return -1 for error
+		○ Return 0 to child process
+		○ Return PID to parent process
+	• exec() loads a new program. The newly loaded program erases/replaces memory space with its content
+• Explain wait() and exit() system functions.
+	• wait() invoke a wait/suspend for the child process to complete before exiting program
+		○ Return -1 for error
+		○ Return positive integer
+	• exit()  is invoked when the process is done to terminate
+		○ Return -1 for error
+		○ Return 0 or nonzero error code sent to child process
+
+
+
+
+
+

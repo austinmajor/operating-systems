@@ -1,0 +1,120 @@
+Textbook question 5.9 (page 251)
+Race conditions are possible in many computer systems. Consider a
+banking system that maintains an account balance with two functions:
+deposit(amount) and withdraw(amount). These two functions are
+passed the amount that is to be deposited or withdrawn from the bank
+account balance. Assume that a husband and wife share a bank account.
+Concurrently, the husband calls the withdraw() function and the wife
+calls deposit(). Describe how a race condition is possible and what
+might be done to prevent the race condition from occurring.
+	
+Both share the same account balance. This account balance is being
+accessed concurrently with withdraw and deposit methods - otherwise, known as 
+an updating anomaly. To fix this we use a lock and unlock feature to prevent a race
+condition. It would be a safe assumption to prioritize the withdraw method for
+a lock condition if the account balance is accessed concurrently. This would prevent
+the event of a user entering the negative account balance.
+
+Textbook question 5.41 (page 257)
+Assume that a finite number of resources of a single resource type must
+be managed. Processes may ask for a number of these resources and will
+return them once finished. As an example, many commercial software
+packages provide a given number of licenses, indicating the number of
+applications that may run concurrently. When the application is started,
+the license count is decremented. When the application is terminated, the
+license count is incremented. If all licenses are in use, requests to start
+the application are denied. Such requests will only be granted when
+an existing license holder terminates the application and a license is
+returned.
+	
+The following program segment is used to manage a finite number of
+instances of an available resource. The maximum number of resources
+and the number of available resources are declared as follows:
+	
+			#define MAX RESOURCES 5
+			int available resources = MAX RESOURCES;
+		
+When a process wishes to obtain a number of resources, it invokes the
+decrease count() function:
+		
+			/* decrease available resources by count resources */
+			/* return 0 if sufficient resources available, */
+			/* otherwise return -1 */
+			int decrease count(int count) {
+				if (available resources < count)
+					return -1;
+				else {
+					available resources -= count;
+					return 0;
+				}
+			}
+		
+When a process wants to return a number of resources, it calls the
+increase count() function:
+		
+			/* increase available resources by count */
+			int increase count(int count) {
+				available resources += count;
+				return 0;
+			}
+		
+The preceding program segment produces a race condition. Do the
+following:
+		
+	a. Identify the data involved in the race condition.
+		○ available resources
+
+	b. Identify the location (or locations) in the code where the race
+	condition occurs.
+		○ available resources -= count;
+		○ available resources += count;
+	
+	c. Using a semaphore or mutex lock, fix the race condition. It is
+	permissible to modify the decrease count() function so that the
+	calling process is blocked until sufficient resources are available.
+		
+		#define MAX RESOURCES 5
+		int available resources = MAX RESOURCES;
+		
+		int decrease_count(int count) {
+			wait(available_resources) {
+				while(available_resources <= 0) {
+					available_resources -= count;
+				}
+			}
+			return 0;
+		}
+		
+		int increase_count(int count) {
+			signal(available_resources) {
+				available += count;
+			}
+			return 0;
+		}
+		
+		
+	OR
+	
+		define MAX RESOURCES 5
+		int available resources = MAX RESOURCES;
+		    mutex.lock()
+		    if (available resources < count)
+		        mutex.unlock()
+		        decrease_count(count);
+		    else{
+		        mutex.lock()
+		        available resources -= count;
+		        mutex.unlock()
+		        return 0;
+		    }
+		}
+		int increase count(int count){
+		    mutex.lock()
+		    if available_resources + count <= MAX_RESOURCES
+		        available resources += count;
+		    else
+		        throw an error
+		    mutex.unlock()
+		    return 0;
+		}
+		

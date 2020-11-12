@@ -1,0 +1,22 @@
+1) For an OS or program (specified task) to work those instructions must be placed
+into an array of storage. Such as registers,cache memories, and hard drives. 
+
+Each has unique fields for each process which supports context switching and 
+serves as the repository for any info that may vary from process to process.
+
+A program becomes a process when an executable file is loaded into memory.
+
+2) A program is a group of instructions to carry out a specified task, 
+whereas the process is a program in execution. 
+
+A process is not just the programs code (referred as text), it includes the current activity, as represented by the value of the program counter and the contents of the processor’s registers. A process generally also
+includes the process stack, which contains temporary data (such as function parameters, return addresses, and local variables), and a data section, which contains global variables. A process may also include a heap, which is memory that is dynamically allocated during process run time
+
+3) Execute user programs and make solving user problems easier. Make the computer system convenient to use
+Use the computer hardware in an efficient manner.
+
+
+The operating system will generate a PCB for each process.
+
+Mechanism to multitask, saves state and moves around to proper registers
+OS uses interrupts to switch between tasks. During an operation the context of a process is captured so it may be restored. Switching the CPU to another process is context switching. 

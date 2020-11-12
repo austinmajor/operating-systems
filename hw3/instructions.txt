@@ -1,0 +1,2 @@
+(Based on Tuesday's and Thursday's content) 
+Develop a multi-thread program for Sudoku checker. Your program will have 28 threads in total (1 basic thread + 9 threads for rows + 9 threads for columns + 9 threads for regions). 

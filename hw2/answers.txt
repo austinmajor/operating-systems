@@ -1,0 +1,110 @@
+Textbook page 152, question 3.19. 
+Using either a UNIX or a Linux system, write a C program that forks
+a child process that ultimately becomes a zombie process. This zombie
+process must remain in the system for at least 10 seconds. Process states
+can be obtained from the command "ps -l". 
+
+The process states are shown below the S column; processes with a state
+of Z are zombies. The process identifier (pid) of the child process is listed
+in the PID column, and that of the parent is listed in the PPID column.
+Perhaps the easiest way to determine that the child process is indeed
+a zombie is to run the program that you have written in the background
+(using the &) and then run the command ps -l to determine whether
+the child is a zombie process. Because you do notwant too many zombie
+processes existing in the system, you will need to remove the one that
+you have created. The easiest way to do that is to terminate the parent
+process using the kill command. For example, if the process id of the
+parent is 4884, you would enter
+kill -9 4884
+
+Please let the parent process sleep 15 seconds so you can use ps -l command to check zombie child process. Submit your .c file along with the screenshot showing the zombie process.
+
+If no parent waiting, process is a zombie
+
+#include <sys/wait.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
+int main()
+{
+    pid_t pid;
+    /* fork a child process */
+    pid = fork();
+    if (pid < 0) { /* error occurred */
+        fprintf(stderr, "Fork Failed");
+        return 1;
+    } else if (pid == 0) { /* child process */
+        printf("child: pid = %d\n", pid);
+        exit(0);
+    } else { /* parent process */
+        printf("parent: pid = %d\n", pid);
+        sleep(15);
+        int state;
+        wait(&state);
+        printf("Child complete\n");
+    }
+    return 0;
+}
+
+Textbook page 155, question 3.21. 
+Please create a THIRD process to from child process to print the number sequence.
+
+
+The Collatz conjecture concerns what happens when we take any
+positive integer n and apply the following algorithm:
+
+The conjecture states that when this algorithm is continually applied,
+all positive integers will eventually reach 1. For example, if n = 35, the
+sequence is
+
+Write a C program using the fork() system call that generates this
+sequence in the child process. The starting number will be provided
+from the command line. For example, if 8 is passed as a parameter on
+the command line, the child process will output 8, 4, 2, 1. Because the
+parent and child processes have their own copies of the data, it will be
+necessary for the child to output the sequence. Have the parent invoke
+the wait() call to wait for the child process to complete before exiting
+the program. Perform necessary error checking to ensure that a positive
+integer is passed on the command line
+
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <sys/wait.h>
+void collatz(int n)
+{
+    printf("%d ", n);
+    if (n == 1)
+        return;
+    if (n % 2 == 0)
+        collatz(n / 2);
+    else
+        collatz(3 * n + 1);
+}
+int main(int argc, char *argv[])
+{
+    if (argc == 1)
+    {
+        printf("No argument was passed\n");
+        exit(1);
+    }
+    int n = atoi(argv[1]);
+    if (n <= 0)
+    {
+        printf("Provide a positive input\n");
+        exit(1);
+    }
+    if (fork() == 0)
+    {
+        if (fork() == 0)
+        {
+            collatz(n);
+            printf("\n");
+        }
+    }
+    else
+    {
+        wait(NULL);
+    }
+}
+

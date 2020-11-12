@@ -1,0 +1,10 @@
+1) Mutex locks and unlocks threads during concurrent operations.
+
+Allows for sharing between resources.
+
+2) Because each thread has it's own indivisible resources, thus each
+mutex is atomic. It can only be accessed this way.
+
+3) If a thread alread is locked by mutex and tries to lock again
+it will enter deadlock. This is because no other thread can unlock
+mutex.

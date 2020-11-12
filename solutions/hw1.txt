@@ -1,0 +1,24 @@
+HW 1 Solution
+Q 3.1: The result is still 5 as the child updates its copy of value. When control returns to the parent, its
+value remains at 5.
+Q 3.2: There are 8 processes created.
+Q 3.9: In general, the operating system must save the state of the currently
+running process and restore the state of the process scheduled to be run
+next. Saving the state of a process typically includes the values of all the
+CPU registers in addition to memory allocation. Context switches must
+also perform many architecture-specific operations, including flushing
+data and instruction caches.
+Q 3.11: When a process is terminated, it briefly moves to the zombie state and remains in that state
+until the parent invokes a call to wait(). When this occurs, the process id as well as entry in the process
+table are both released. However, if a parent does not invoke wait(), the child process remains a zombie
+as long as the parent remains alive. Once the parent process terminates, the initprocess becomes the
+new parent of the zombie. Periodically, the init process calls wait() which ultimately releases the pid and
+entry in the process table of the zombie process.
+Q 3.12: 16 processes are created.
+Q 3.13: The call to exec() replaces the address space of the process with the
+program specified as the parameter to exec(). If the call to exec()
+succeeds, the new program is now running and control from the call
+to exec() never returns. In this scenario, the line printf("Line J");
+would never be performed. However, if an error occurs in the call to
+exec(), the function returns control and therefor the line printf("Line J"); would be performed.
+Q 3.14: A = 0, B = 2603, C = 2603, D = 2600

@@ -1,0 +1,52 @@
+Textbook page 149, question 3.1(Line A), 3.2 (Figure 3.31)
+
+3.1 Using the program shown in Figure 3.30, explain what the output will
+be at LINE A.
+
+	When compiled the output:
+		PARENT: value = 5
+	
+	Both parent and child process have unique data
+	
+	The child process will update it's own values
+	
+	Control returns parent process which is remaining at 5
+
+
+3.2 Including the initial parent process, how many processes are created by
+the program shown in Figure 3.31?
+
+	There are 3 fork() system calls
+	
+	For 3 fork() call, 2^3=8 processes created
+
+Textbook page 151, question 3.9(actions by a kernel), 3.11(init process), 3.12(figure 3.32), 3.13(figure 3.33), 3.14(figure 3.34)
+
+3.9 Describe the actions taken by a kernel to context-switch between processes.
+
+	The kernel saves state of current task in PCB before switching to another task. PCB is refenced in future child tasks to restore state of kernel. 
+
+3.11 Explain the role of the init process on UNIX and Linux systems in regard to process termination. 
+
+	init process is the root of process hierarchy.
+
+	init is first process to run and create a new process ID. 
+	
+	init invokes wait() allowing the exit status of orphaned processes to be collected and releasing orphans process identifies and process table entry.
+	
+3.12 Including the initial parent process, how many processes are created by the program shown in Figure 3.32?
+
+	There are 4 fork() system calls
+	
+	For 4 fork() call, 2^4=16 processes created
+
+3.13 Explain the circumstances under which the line of code marked printf("LINE J") in Figure 3.33 will be reached. 
+
+	If an error occurs on invocation of exec() the function will return and printf("LINE J") will occur on terminal as "LINE J".
+
+3.14 Using the program in Figure 3.34, identify the values of pid at lines A, B, C, and D. (Assume that the actual pids of the parent and child are 2600 and 2603, respectively.)
+
+	A=0
+	B=2603
+	C=2603
+	D=2600

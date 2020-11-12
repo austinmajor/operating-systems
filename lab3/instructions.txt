@@ -1,0 +1,3 @@
+Submit your code for Sudoku checker. (Tuesday's and Thursday's content.)
+
+1 Basic Thread + 1 Row Thread + 1 Column Thread + 9 Block/Region Thread

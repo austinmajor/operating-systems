@@ -1,0 +1,75 @@
+	1. Explain the exit() function. Will the function always be called?
+	Yes, exit should always be called.
+	
+	When a process is done, it executes an exit() system call to terminate, returning to the invoking process a status code of 0 or a nonzero error code. 
+	
+	This status or error code is then available to the shell or other programs.
+	
+	A process terminates when it finishes executing its final statement and asks the operating system to delete it by using the exit() system call. 
+	
+	At that point, the process may return a status value (typically an integer) to its parent process (via the wait() system call). 
+	
+	All the resources of the process—including physical and virtual memory, open files, and I/O buffers—are deallocated by the operating system.
+	
+	exit() may be called either directly (explicit. just call exit) or indirectly (implicit. via a return statement in main()).
+	
+	Process termination
+		exit can be called explicitly and implicitly
+			Explicitly: just call exit();
+			Implicitly: program ends after last instruction
+		Child process can notify the exit status to parent process
+			parent process calls wait()
+	
+	2. Explain the wait() function. What if the parent process does not call wait()?
+	A parent process may wait for the termination of a child process by using the wait() system call. 
+	
+	The wait() system call is passed a parameter that allows the parent to obtain the exit status of the child. 
+	
+	This system call also returns the process identifier of the terminated child so that the parent can tell which of its children has terminated.
+	 
+	When a process terminates, its resources are deallocated by the operating system.
+	 
+	Its entry in the process table must remain there until the parent calls wait(), because the process table contains the process’s exit status.
+	
+	If a parent did not invoke wait() and instead terminated, its child processes are orphans. 
+	
+	Linux and UNIX address this scenario by assigning the init process as the new parent to orphan processes. 
+	
+	The init process periodically invokes wait(), thereby allowing the exit status of any orphaned process to be collected and releasing the orphan’s process identifier and process-table entry.
+	
+	If parent terminated without invoking wait, process is an orphan, init will assign new ID
+	
+	3. Explain in what case will a process become a zombie process? 
+	If no parent waiting , process is zombie
+
+	A process that has terminated, but whose parent has not yet called wait(), is known as a zombie process. 
+	
+	All processes transition to this state when they terminate, but generally they exist as zombies only briefly. 
+	
+	Once the parent calls wait(), the process identifier of the zombie process and its entry in the process table are released.
+	
+	4. Briefly describe how two processes communicate via socket (less than 200 words). 
+	ex. RPC (remote procedure 
+	
+	Sockets can exist locally and remotely.
+	
+	A socket is defined as an endpoint for communication. 
+	
+	A pair of processes communicating over a network employs a pair of sockets, one for each process. 
+	
+	A socket is identified by an IP address concatenated with a port number. 
+	
+	The socket 161.25.19.8:1625 refers to port 1625 on host 161.25.19.8
+	
+	Sockets typically use a client server architecture. 
+	
+	Communication consists between a pair of sockets
+	
+	All ports below 1024 are well known for standard services
+	
+	Special IP address 127.0.0.1 (loopback) to refer to system on which process is running. 
+	
+	The server waits for incoming client requests by listening to a specified port. 
+	
+	Once a request is received, the server accepts a connection from the client socket to complete the connection.
+	

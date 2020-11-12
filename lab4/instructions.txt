@@ -1,0 +1,4 @@
+submit multiple c files to demonstrate following:
+- a file using multiple threads to show data race condition
+- a file using multiple threads to show deadlock
+- a code snippet to show the usage of semaphore. 
